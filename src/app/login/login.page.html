@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Iniciar Sesion
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Iniciar Sesion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" class="login-container">
+    <strong class="title">Tareas IDGS</strong>
+    <p class="welcome-message">Bienvenido</p>
+  
+    <ion-card mode="ios" class="login-card">
+      <ion-list>
+  
+        <ion-item class="input-item">
+          <ion-input
+            [(ngModel)]="user"
+            label="Usuario"
+            labelPlacement="floating"
+            placeholder="Enter text"
+          ></ion-input>
+        </ion-item>
+  
+        <ion-item class="input-item">
+          <ion-input
+            [(ngModel)]="password"
+            label="Contraseña"
+            labelPlacement="floating"
+            type="password"
+          ></ion-input>
+        </ion-item>
+  
+        <ion-button (click)="login()" expand="full" shape="round" class="login-button">
+          Ingresar
+        </ion-button>
+  
+      </ion-list>
+    </ion-card>
+  </div>
+  
+</ion-content>

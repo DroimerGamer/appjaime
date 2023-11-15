@@ -1,20 +1,147 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-buttons slot="start">
+      <!-- Agregado: Botón de cerrar sesión -->
+      <ion-button href="..//login/" class="boton-sesion">
+        <ion-icon name="return-down-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="titulo-personalizado">
+     Tareas
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-segment [(ngModel)]="vistaTarjetas" class="segmento-personalizado" mode="md">
+    <ion-segment-button value="local" class="segmento-button">
+      <ion-label>Mis tareas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="trello" class="segmento-button">
+      <ion-label>Mi tablero</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  
+  
+  <ion-segment [(ngModel)]="opListaTrello" *ngIf="vistaTarjetas === 'trello'">
+    <ion-segment-button class="segmento-trello" [value]="list.id" *ngFor="let list of lista" (click)="obtenerTarjetasPorListas(list.id)">
+      <ion-label>{{ list.name }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  
+ <ion-list>
+  <div class="contenidoLocal" *ngIf="vistaTarjetas === 'local'">
+    <ion-item-sliding *ngFor="let item of tareas">
+      <ion-item detail>
+        <ion-label>
+          <h1>{{item.nombre}}</h1>
+          <p>{{item.descripcion}}</p>
+        </ion-label>
+        <ion-chip slot="end" color="danger">{{item.prioridad}}</ion-chip>
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option color="warning" id="open-modal" (click)="editarTarea(item)">
+          <ion-icon slot="icon-only" name="pencil"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="eliminarTarea(item.id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div>
+  <div class="contenidoTrello" *ngIf="vistaTarjetas === 'trello'">
+    <ion-item-sliding *ngFor="let item of tarjetasTrello">
+      <ion-item detail>
+        <ion-label>
+          <h1>{{item.name}}</h1>
+          <!-- <p>{{item.descripcion}}</p> -->
+        </ion-label>
+        <!-- <ion-chip slot="end" color="danger">{{item.prioridad}}</ion-chip> -->
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option color="warning" id="open-modal" (click)="editarTarjetaTrello(item)">
+          <ion-icon slot="icon-only" name="pencil"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="eliminarTarjeta(item)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div>
+  
+ </ion-list>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end" class="fab-container">
+  <ion-fab-button (click)="openTrello()" class="trello-button">
+    <ion-icon name="podium-outline"></ion-icon>
+  </ion-fab-button>
+  <br>
+  <ion-fab-button (click)="openModal()" class="modal-button">
+    <ion-icon name="download-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+
+<ion-modal trigger="open-modal">
+<ng-template>
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="cancelModal()">
+          Cancel
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        <span *ngIf="tareaEditada && !trello">Editar Tarea</span>
+        <span *ngIf="!tareaEditada && !trello">Nueva Tarea</span>
+        <span *ngIf="!tareaEditada && trello">Nueva Tarjeta</span>
+        <span *ngIf="tareaEditada && trello">Editar Tarjeta</span>
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="confirmModal()" [strong]="true">
+          Confirm
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item>
+      <ion-input
+      [(ngModel)]="nombre" 
+      label="Nombre" 
+      labelPlacement="floating" 
+      placeholder="Enter text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea 
+      [(ngModel)]="descripcion"
+      label="Descripción" 
+      labelPlacement="floating" 
+      placeholder="Enter text"></ion-textarea>
+    </ion-item>
+    <ion-item *ngIf="!trello">
+      <ion-select 
+      [(ngModel)]="prioridad"
+      aria-label="Prioridad" 
+      interface="popover" 
+      placeholder="Seleccione una">
+        <ion-select-option value="alta">Alta</ion-select-option>
+        <ion-select-option value="media">Media</ion-select-option>
+        <ion-select-option value="baja">Baja</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="trello && !trelloEdit">
+      <ion-select 
+      [(ngModel)]="opListaTrello"
+      aria-label="Lista" 
+      interface="popover" 
+      placeholder="Seleccione una">
+        <ion-select-option *ngFor="let list of lista" [value]="list.id">{{ list.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-content>
+</ng-template>
+</ion-modal>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
 </ion-content>

@@ -1,27 +1,82 @@
-#container {
-  text-align: center;
+.titulo-personalizado {
+    font-size: 24px; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    color: #edf1f3; /* Color del texto */
+    text-align: center; /* Alineación del texto */
+    /* Otros estilos según tus preferencias */
+  }
+  
+  .segmento-personalizado {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #3d3f40; /* Color de fondo del segmento */
+    color: #fff; /* Color del texto del segmento */
+    border: 1px solid rgb(60, 61, 62); /* Borde del segmento */
+    border-radius: 0px; /* Radio de borde para esquinas redondeadas */
+  }
+  
+  .boton-sesion{
+    --background: #363738; /* Color de fondo */
+    --color: #fff; /* Color del texto */
+    --border-radius: 8px; /* Radio de borde para esquinas redondeadas */
+    --padding-start: 12px; /* Espaciado interno a la izquierda */
+    --padding-end: 12px; /* Espaciado interno a la derecha */
+    --box-shadow: none; /* Eliminar sombra si es necesario */
+    --border: none; /* Eliminar borde si es necesario */
+    --transition: background-color 0.3s ease; /* Efecto de transición al pasar el ratón */
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  }
+  
+  .segmento-personalizado ion-label {
+    font-size: 15px; /* Tamaño de la fuente del texto del segmento */
+    font-weight: bold; /* Peso de la fuente del texto del segmento */
+  }
+  
+  .segmento-personalizado ion-segment-button {
+    flex: 1; /* Ocupar el espacio disponible de manera equitativa */
+    text-align: center; /* Alinear el texto al centro */
+    padding: 10px; /* Añadir relleno interno al botón */
+  }
+  .fab-container {
+    margin-bottom: 16px;
+    margin-right: 16px;
+  }
+  
+  .trello-button {
+    --background: #585a5c; /* Color de fondo del botón Trello */
+  }
+  
+  .modal-button {
+    --background: #3b3d3c; /* Color de fondo del botón Modal */
+  }
+  
+  .segmento-personalizado {
+    background-color: #3b4145; /* Color de fondo del segmento */
+    color: #fff; /* Color del texto del segmento */
+    border: 1px solid #3c4246; /* Borde del segmento */
+    border-radius: 10px; /* Radio de borde para esquinas redondeadas */
+  }
+  
+  .segmento-button {
+    --color-checked: #fff; /* Color del texto cuando está seleccionado */
+    --background-checked: #393939; /* Color de fondo cuando está seleccionado */
+  }
+  
+  /* Aplicar estilos solo cuando opListaTrello está presente y vistaTarjetas es 'trello' */
+ion-segment-button.segmento-trello {
+    --color: #fff; /* Color del texto del segmento */
+    --border: 1px solid rgb(38, 69, 90); /* Borde del segmento */
+    --border-radius: 3px; /* Radio de borde para esquinas redondeadas */
+  }
+  
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
+  ion-segment-button.segmento-trello:hover {
+    --background: rgba(38, 71, 124, 0.486); /* Nuevo color de fondo */
+  }
+  
+  
+  
+  
+  
+  
